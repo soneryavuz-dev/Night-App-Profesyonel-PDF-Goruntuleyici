@@ -1,0 +1,216 @@
+:root {
+  color-scheme: dark;
+  --bg: #0f0f10;
+  --panel: #17171a;
+  --panel-2: #1f1f23;
+  --border: #2d2d33;
+  --text: #f0f0f0;
+  --muted: #a5a5ad;
+  --accent: #7c5cff;
+  --accent-2: #3cc7b7;
+  --sidebar-width: 330px;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  height: 100%;
+  background: var(--bg);
+  color: var(--text);
+  font: 13px/1.4 system-ui, -apple-system, sans-serif;
+  overflow: hidden;
+}
+
+.app {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  position: relative;
+}
+
+/* --- YAN PANEL (SIDEBAR) --- */
+.sidebar {
+  width: var(--sidebar-width);
+  height: 100%;
+  overflow-y: auto;
+  background: linear-gradient(180deg, #121216 0%, #17171b 100%);
+  border-right: 1px solid var(--border);
+  padding: 14px;
+  position: absolute;
+  left: calc(var(--sidebar-width) * -1); 
+  top: 0;
+  z-index: 2000;
+  transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 10px 0 30px rgba(0,0,0,0.5);
+}
+
+.sidebar.open {
+  left: 0;
+}
+
+.sidebar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+
+.brand .title { font-size: 18px; font-weight: 700; }
+.brand .subtitle { color: var(--muted); margin-top: 2px; }
+
+.icon-btn {
+  background: transparent;
+  border: none;
+  color: var(--muted);
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+}
+.icon-btn:hover { color: var(--text); background: rgba(255,255,255,0.1); }
+
+.section {
+  margin-top: 14px;
+  padding: 12px;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+}
+
+.section-title { margin-bottom: 10px; font-weight: 700; }
+.toggle-row { display: flex; align-items: center; gap: 10px; }
+.preset-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+
+.preset-btn, .wide-btn, .topbtn, .tab-btn {
+  border: 1px solid var(--border);
+  background: var(--panel-2);
+  color: var(--text);
+  border-radius: 8px;
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.preset-btn:hover, .wide-btn:hover, .topbtn:hover, .tab-btn:hover { background: var(--border); }
+.preset-btn.active { background: rgba(124,92,255,0.28); border-color: rgba(124,92,255,0.6); }
+
+.controls label { display: block; margin-bottom: 10px; }
+.controls label span { float: right; color: var(--accent-2); }
+.controls input[type="range"] { width: 100%; accent-color: var(--accent); }
+
+/* --- ANA EKRAN (PDF ALANI) --- */
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100%;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: #141418;
+  border-bottom: 1px solid var(--border);
+  height: 56px;
+  z-index: 100;
+}
+
+.tab-btn {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+  font-weight: 600;
+}
+
+.divider { width: 1px; height: 24px; background: var(--border); margin: 0 8px; }
+.page-meta { margin-left: auto; color: var(--muted); font-weight: 600; }
+
+.stage {
+  flex: 1;
+  overflow: auto;
+  padding: 20px;
+  background: #0c0c0d;
+}
+
+.pdf-pages {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  align-items: center;
+}
+
+.page-wrap {
+  background: #fff;
+  box-shadow: 0 12px 28px rgba(0,0,0,0.35);
+  border-radius: 2px;
+  overflow: hidden;
+  position: relative;
+}
+
+.page-inner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform-origin: 0 0;
+}
+
+/* 🔥 RESİM OLARAK ALGILANMAYI ENGELLER (SAĞ TIK HATASI İÇİN) 🔥 */
+.page-wrap canvas {
+  pointer-events: none !important;
+  display: block;
+}
+/* 🔥 METİN SEÇİMİ (KOPYALAMA BİRLEŞME HATASI ÇÖZÜLDÜ) 🔥 */
+.textLayer {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+  line-height: 1.2;
+  text-align: initial;
+  -webkit-text-size-adjust: none;
+  z-index: 2;
+  /* Kopyalamanın bozulmaması için user-select engeli kaldırıldı */
+}
+
+.textLayer span {
+  color: transparent !important;
+  position: absolute;
+  white-space: pre;
+  cursor: text;
+  transform-origin: 0% 0%;
+  border-radius: 2px;
+}
+
+/* Boş karakterlerin farenize takılmasını engeller */
+.textLayer span:empty,
+.textLayer span[data-canvas-width="0"] {
+  pointer-events: none !important;
+}
+
+/* Kopyalarken satır atlamalarının korunması için */
+.textLayer br {
+  color: transparent !important;
+}
+
+.textLayer .endOfContent {
+  display: none !important;
+}
+
+/* Görsel olarak sadece kelimelerin seçili (mavi) görünmesini sağla */
+.textLayer ::selection { 
+  background: transparent !important; 
+}
+.textLayer span::selection {
+  background: rgba(36, 114, 253, 0.25) !important; 
+  color: transparent !important; 
+}
+
+.hidden-svg { width: 0; height: 0; position: absolute; left: -9999px; }

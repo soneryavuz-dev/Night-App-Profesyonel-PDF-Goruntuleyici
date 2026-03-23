@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <title>Night App Ayarları</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="wrap">
+    <h1>Night App</h1>
+    <p class="muted">PDF Görüntüleyici</p>
+    
+    <label class="label">PDF URL:</label>
+    <input type="text" id="urlInput" class="input" placeholder="https://ornek.com/dosya.pdf">
+    
+    <div class="row">
+      <button class="btn" id="openCurrentBtn">Aktif Sekmeyi Aç</button>
+      <button class="btn primary" id="openUrlBtn">URL'yi Aç</button>
+    </div>
+    
+    <div class="row">
+      <button class="btn" id="openFileBtn">Yerel Dosya Seç</button>
+      <input type="file" id="fileInput" accept="application/pdf" style="display:none">
+    </div>
+    
+    <div id="status" class="status"></div>
+  </div>
+  
+  <script src="popup.js"></script>
+</body>
+</html>

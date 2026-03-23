@@ -1,0 +1,29 @@
+{
+  "manifest_version": 3,
+  "name": "Night App - Chrome PDF Mode",
+  "version": "1.0.0",
+  "description": "Karanlık mod destekli profesyonel PDF okuyucu.",
+  "permissions": [
+    "storage",
+    "tabs"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Night App Ayarları"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "pdfjs/build/*",
+        "pdfjs/web/*"
+      ],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}

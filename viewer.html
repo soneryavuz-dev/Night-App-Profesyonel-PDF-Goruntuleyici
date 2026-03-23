@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <title>Night App - PDF Viewer</title>
+  <link rel="stylesheet" href="viewer.css">
+</head>
+<body>
+  <div class="app">
+    
+    <div class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <div class="brand">
+          <div class="title">Night App</div>
+          <div class="subtitle">PDF Reader</div>
+        </div>
+        <button id="closeSidebarBtn" class="icon-btn" title="Menüyü Kapat">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+      
+      <div class="section">
+        <div class="toggle-row">
+          <input type="checkbox" id="enabled" checked>
+          <label for="enabled">Karanlık Mod Aktif</label>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Hazır Profiller</div>
+        <div class="preset-grid">
+          <button class="preset-btn active" data-preset="default">Varsayılan</button>
+          <button class="preset-btn" data-preset="pureDark">Tam Karanlık</button>
+          <button class="preset-btn" data-preset="warmNight">Gece Modu</button>
+          <button class="preset-btn" data-preset="amoled">Amoled</button>
+          <button class="preset-btn" data-preset="terminal">Terminal</button>
+          <button class="preset-btn" data-preset="scannedPdf">Taranmış</button>
+        </div>
+      </div>
+
+      <div class="section controls">
+        <div class="section-title">İnce Ayarlar</div>
+        <label>Parlaklık <span id="val-brightness">100%</span></label>
+        <input type="range" id="brightness" min="0" max="300" value="100">
+        
+        <label>Kontrast <span id="val-contrast">100%</span></label>
+        <input type="range" id="contrast" min="0" max="300" value="100">
+        
+        <label>Tersine Çevir <span id="val-invert">Kapalı</span></label>
+        <input type="range" id="invert" min="0" max="100" value="0">
+        
+        <label>Gamma <span id="val-gamma">1.0</span></label>
+        <input type="range" id="gamma" min="0.1" max="3.0" step="0.1" value="1.0">
+        
+        <label>Doygunluk <span id="val-saturation">100%</span></label>
+        <input type="range" id="saturation" min="0" max="400" value="100">
+        
+        <label>Gri Tonlama <span id="val-grayscale">0%</span></label>
+        <input type="range" id="grayscale" min="0" max="100" value="0">
+        
+        <label>Sepya <span id="val-sepia">0%</span></label>
+        <input type="range" id="sepia" min="0" max="100" value="0">
+        
+        <label>Mavi Işık <span id="val-blueLight">0%</span></label>
+        <input type="range" id="blueLight" min="0" max="100" value="0">
+        
+        <label>Keskinlik <span id="val-sharpness">0</span></label>
+        <input type="range" id="sharpness" min="0" max="10" value="0">
+        
+        <label>Renk Tonu <span id="val-hue">0°</span></label>
+        <input type="range" id="hue" min="-180" max="180" value="0">
+      </div>
+      
+      <div class="section">
+         <button class="wide-btn" id="openFileBtn">Yerel Dosya Aç</button>
+         <input type="file" id="fileInput" accept="application/pdf" style="display:none">
+         <div class="info" id="info"></div>
+      </div>
+    </div>
+
+    <div class="main">
+      <div class="topbar">
+        <button id="toggleSidebarBtn" class="tab-btn" title="Ayarları Aç">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+          <span>Ayarlar</span>
+        </button>
+        
+        <div class="divider"></div>
+
+        <button class="topbtn" id="fitWidthBtn">Genişliğe Sığdır</button>
+        <button class="topbtn" id="fitPageBtn">Sayfaya Sığdır</button>
+        <button class="topbtn" id="zoomOutBtn">Uzaklaş</button>
+        <button class="topbtn" id="zoomInBtn">Yakınlaş</button>
+        
+        <div class="page-meta" id="pageMeta">0 / 0</div>
+      </div>
+      <div class="stage" id="stage">
+        <div class="pdf-pages" id="pdfPages"></div>
+      </div>
+    </div>
+  </div>
+
+  <svg id="nightvision-svg-engine" class="hidden-svg"></svg>
+
+  <script src="../build/pdf.js"></script>
+  <script src="viewer.js"></script>
+</body>
+</html>
